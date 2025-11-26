@@ -1,0 +1,572 @@
+/* ============================================
+   TASKFLOW PRO - EXECUTIVE TASK MANAGER
+   ============================================
+   Diseño elegante con errores intencionados para el taller
+   ============================================ */
+
+/* PROBLEMA 1: @import bloquea el renderizado crítico */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+/* PROBLEMA 2: Selector universal afecta performance */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* PROBLEMA 3: Variables CSS no utilizadas */
+:root {
+    --primary: #667eea;
+    --primary-dark: #5568d3;
+    --secondary: #764ba2;
+    --success: #10b981;
+    --danger: #ef4444;
+    --warning: #f59e0b;
+    --gray-50: #f9fafb;
+    --gray-100: #f3f4f6;
+    --gray-200: #e5e7eb;
+    --gray-300: #d1d5db;
+    --gray-400: #9ca3af;
+    --gray-500: #6b7280;
+    --gray-600: #4b5563;
+    --gray-700: #374151;
+    --gray-800: #1f2937;
+    --gray-900: #111827;
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+}
+
+/* PROBLEMA 4: Body con colores hardcodeados en lugar de variables */
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    padding: 20px;
+    /* PROBLEMA 5: Color con bajo contraste */
+    color: #888;
+}
+
+/* PROBLEMA 6: Selectores profundamente anidados e ineficientes */
+body div.app-container div.header div.logo-section div.title-group h1 span {
+    font-weight: 700;
+}
+
+.app-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 24px;
+    /* PROBLEMA 7: Box-shadow complejo que afecta performance */
+    box-shadow: 
+        0 20px 25px -5px rgba(0, 0, 0, 0.1),
+        0 10px 10px -5px rgba(0, 0, 0, 0.04),
+        0 0 60px rgba(102, 126, 234, 0.3);
+    overflow: hidden;
+    /* PROBLEMA 8: Animación sin will-change */
+    animation: fadeIn 0.6s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Header Section */
+.header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 32px;
+    color: white;
+}
+
+.logo-section {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.logo {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    /* PROBLEMA 9: Box-shadow pesado */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.title-group h1 {
+    font-size: 32px;
+    font-weight: 700;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.pro-badge {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 600;
+    backdrop-filter: blur(10px);
+}
+
+.subtitle {
+    /* PROBLEMA 10: Color con bajo contraste sobre fondo oscuro */
+    color: #b8b8ff;
+    font-size: 14px;
+    margin-top: 4px;
+}
+
+/* Stats Container */
+.stats-container {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.stats-card {
+    flex: 1;
+    min-width: 120px;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    padding: 16px;
+    border-radius: 12px;
+    text-align: center;
+    /* PROBLEMA 11: Transición en todas las propiedades */
+    transition: all 0.3s ease;
+}
+
+.stats-card:hover {
+    background: rgba(255, 255, 255, 0.25);
+    transform: translateY(-2px);
+}
+
+.stats-number {
+    display: block;
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+
+.stats-label {
+    display: block;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    opacity: 0.9;
+}
+
+/* Input Section */
+.input-section {
+    padding: 32px;
+    background: #f9fafb;
+    border-bottom: 1px solid #e5e7eb;
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+}
+
+.input-wrapper {
+    flex: 1;
+    display: flex;
+    gap: 12px;
+}
+
+/* PROBLEMA 12: Input sin label asociado (accesibilidad) */
+.task-input {
+    flex: 1;
+    padding: 14px 20px;
+    border: 2px solid #e5e7eb;
+    border-radius: 12px;
+    font-size: 16px;
+    font-family: inherit;
+    /* PROBLEMA 13: Transición en todas las propiedades */
+    transition: all 0.3s ease;
+    /* PROBLEMA 14: Sin outline para accesibilidad */
+    outline: none;
+}
+
+.task-input:focus {
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.task-input::placeholder {
+    /* PROBLEMA 15: Placeholder con bajo contraste */
+    color: #ccc;
+}
+
+.priority-select {
+    padding: 14px 16px;
+    border: 2px solid #e5e7eb;
+    border-radius: 12px;
+    font-size: 14px;
+    font-family: inherit;
+    background: white;
+    cursor: pointer;
+    min-width: 150px;
+    /* PROBLEMA 16: Sin outline para accesibilidad */
+    outline: none;
+}
+
+.priority-select:focus {
+    border-color: #667eea;
+}
+
+/* PROBLEMA 17: Botones sin cursor pointer explícito */
+.btn-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    padding: 14px 32px;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    /* PROBLEMA 18: Transición en todas las propiedades */
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px -1px rgba(102, 126, 234, 0.3);
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 15px -3px rgba(102, 126, 234, 0.4);
+}
+
+.btn-primary:active {
+    transform: translateY(0);
+}
+
+.btn-icon {
+    font-size: 20px;
+    line-height: 1;
+}
+
+/* Filter Tabs */
+.filter-tabs {
+    display: flex;
+    gap: 8px;
+    padding: 24px 32px 0;
+    border-bottom: 2px solid #e5e7eb;
+}
+
+/* PROBLEMA 19: Tabs sin role apropiado (accesibilidad) */
+.tab {
+    padding: 12px 24px;
+    border: none;
+    background: transparent;
+    color: #6b7280;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    margin-bottom: -2px;
+    transition: all 0.2s ease;
+}
+
+.tab:hover {
+    color: #667eea;
+}
+
+.tab.active {
+    color: #667eea;
+    border-bottom-color: #667eea;
+}
+
+/* Task List */
+.task-list {
+    padding: 24px 32px;
+    min-height: 400px;
+}
+
+/* PROBLEMA 20: Animaciones pesadas sin optimización */
+.task-card {
+    background: white;
+    border: 2px solid #e5e7eb;
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    transition: all 0.3s ease;
+    /* PROBLEMA 21: Animación sin will-change */
+    animation: slideIn 0.4s ease-out;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.task-card:hover {
+    border-color: #667eea;
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
+    transform: translateY(-2px);
+}
+
+.task-card.completed {
+    opacity: 0.6;
+    background: #f9fafb;
+}
+
+.task-card.completed .task-text {
+    text-decoration: line-through;
+    color: #9ca3af;
+}
+
+/* Priority Indicators */
+.task-card.priority-high {
+    border-left: 4px solid #ef4444;
+}
+
+.task-card.priority-medium {
+    border-left: 4px solid #f59e0b;
+}
+
+.task-card.priority-low {
+    border-left: 4px solid #10b981;
+}
+
+.task-content {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.task-checkbox {
+    width: 24px;
+    height: 24px;
+    border: 2px solid #d1d5db;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 14px;
+    color: white;
+}
+
+.task-checkbox:hover {
+    border-color: #667eea;
+    background: #f3f4f6;
+}
+
+.task-card.completed .task-checkbox {
+    background: #667eea;
+    border-color: #667eea;
+}
+
+.task-details {
+    flex: 1;
+}
+
+.task-text {
+    font-size: 16px;
+    color: #1f2937;
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+.task-meta {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.task-priority {
+    font-size: 12px;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.priority-high .task-priority {
+    background: #fee2e2;
+    color: #ef4444;
+}
+
+.priority-medium .task-priority {
+    background: #fef3c7;
+    color: #f59e0b;
+}
+
+.priority-low .task-priority {
+    background: #d1fae5;
+    color: #10b981;
+}
+
+.task-date {
+    font-size: 12px;
+    /* PROBLEMA 22: Color con bajo contraste */
+    color: #ccc;
+}
+
+.task-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.btn-icon {
+    width: 36px;
+    height: 36px;
+    border: none;
+    background: #f3f4f6;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    transition: all 0.2s ease;
+}
+
+.btn-icon:hover {
+    background: #e5e7eb;
+    transform: scale(1.1);
+}
+
+.btn-delete:hover {
+    background: #fee2e2;
+    color: #ef4444;
+}
+
+/* Empty State */
+.empty-state {
+    text-align: center;
+    padding: 80px 32px;
+    color: #9ca3af;
+}
+
+.empty-icon {
+    font-size: 64px;
+    margin-bottom: 16px;
+    opacity: 0.5;
+}
+
+.empty-state h3 {
+    font-size: 20px;
+    color: #4b5563;
+    margin-bottom: 8px;
+}
+
+.empty-state p {
+    font-size: 14px;
+}
+
+/* Footer */
+.footer {
+    text-align: center;
+    padding: 24px;
+    color: white;
+    font-size: 14px;
+    margin-top: 32px;
+}
+
+/* PROBLEMA 23: Media queries duplicados e ineficientes */
+@media (max-width: 768px) {
+    .app-container {
+        border-radius: 0;
+        margin: -20px;
+    }
+    
+    .input-section {
+        flex-direction: column;
+    }
+    
+    .input-wrapper {
+        flex-direction: column;
+    }
+    
+    .stats-container {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 767px) {
+    .header {
+        padding: 24px;
+    }
+    
+    .task-list {
+        padding: 16px;
+    }
+}
+
+/* PROBLEMA 24: Reglas CSS no utilizadas */
+.unused-class {
+    display: none;
+    visibility: hidden;
+}
+
+.another-unused {
+    position: absolute;
+    top: -9999px;
+}
+
+/* PROBLEMA 25: Propiedades duplicadas */
+.duplicate-test {
+    color: red;
+    background: white;
+    color: blue;
+    padding: 10px;
+    padding: 20px;
+}
+
+/* PROBLEMA 26: Selectores con especificidad innecesariamente alta */
+html body div.app-container div.task-list div.task-card div.task-content div.task-details div.task-text {
+    line-height: 1.5;
+}
+
+/* PROBLEMA 27: Uso excesivo de !important */
+.force-style {
+    color: red !important;
+    background: white !important;
+    display: block !important;
+    position: relative !important;
+}
+
+/* PROBLEMA 28: Filtros CSS que afectan performance */
+.filtered-element {
+    filter: blur(2px) brightness(1.1) contrast(1.2);
+}
+
+/* PROBLEMA 29: Gradientes complejos */
+.complex-gradient {
+    background: linear-gradient(
+        135deg,
+        #667eea 0%,
+        #764ba2 25%,
+        #f093fb 50%,
+        #4facfe 75%,
+        #667eea 100%
+    );
+}
+
+/* PROBLEMA 30: Comentarios excesivos */
+/* TODO: Fix this later */
+/* HACK: Temporary solution */
+/* FIXME: This is broken */
+/* NOTE: Remember to update */

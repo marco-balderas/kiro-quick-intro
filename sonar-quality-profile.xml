@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<profile>
+  <name>Kiro Workshop Profile</name>
+  <language>js</language>
+  <rules>
+    <!-- Vulnerabilidades de Seguridad -->
+    <rule>
+      <repositoryKey>javascript</repositoryKey>
+      <key>S1523</key> <!-- eval() usage -->
+      <priority>BLOCKER</priority>
+    </rule>
+    <rule>
+      <repositoryKey>javascript</repositoryKey>
+      <key>S2068</key> <!-- Hardcoded credentials -->
+      <priority>BLOCKER</priority>
+    </rule>
+    
+    <!-- Code Smells -->
+    <rule>
+      <repositoryKey>javascript</repositoryKey>
+      <key>S2703</key> <!-- Global variables -->
+      <priority>MAJOR</priority>
+    </rule>
+    <rule>
+      <repositoryKey>javascript</repositoryKey>
+      <key>S1854</key> <!-- Unused variables -->
+      <priority>MAJOR</priority>
+    </rule>
+    <rule>
+      <repositoryKey>javascript</repositoryKey>
+      <key>S1481</key> <!-- Unused local variables -->
+      <priority>MINOR</priority>
+    </rule>
+    <rule>
+      <repositoryKey>javascript</repositoryKey>
+      <key>S138</key> <!-- Function complexity -->
+      <priority>MAJOR</priority>
+      <parameters>
+        <parameter>
+          <key>max</key>
+          <value>10</value>
+        </parameter>
+      </parameters>
+    </rule>
+    
+    <!-- Bugs -->
+    <rule>
+      <repositoryKey>javascript</repositoryKey>
+      <key>S1440</key> <!-- == vs === -->
+      <priority>MAJOR</priority>
+    </rule>
+    <rule>
+      <repositoryKey>javascript</repositoryKey>
+      <key>S1172</key> <!-- Unused parameters -->
+      <priority>MAJOR</priority>
+    </rule>
+    
+    <!-- Duplicación de código -->
+    <rule>
+      <repositoryKey>javascript</repositoryKey>
+      <key>S1192</key> <!-- String literals duplicated -->
+      <priority>MINOR</priority>
+    </rule>
+    
+    <!-- Mantenibilidad -->
+    <rule>
+      <repositoryKey>javascript</repositoryKey>
+      <key>S107</key> <!-- Too many parameters -->
+      <priority>MAJOR</priority>
+      <parameters>
+        <parameter>
+          <key>max</key>
+          <value>7</value>
+        </parameter>
+      </parameters>
+    </rule>
+  </rules>
+</profile>

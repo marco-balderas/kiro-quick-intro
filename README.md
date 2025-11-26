@@ -28,7 +28,7 @@ Estos enfoques no son excluyentes: puedes combinarlos según la fase del proyect
 [![SonarQube](https://img.shields.io/badge/SonarQube-MCP-blue)](http://localhost:9000)
 [![Chrome DevTools](https://img.shields.io/badge/Chrome-DevTools-green)](https://developer.chrome.com/docs/devtools/)
 [![AWS CDK](https://img.shields.io/badge/AWS-CDK-orange)](https://aws.amazon.com/cdk/)
-[![TaskFlow Pro](https://img.shields.io/badge/TaskFlow-Pro-purple)](https://github.com/kiro-workshop)
+[![TaskFlow Pro](https://img.shields.io/badge/TaskFlow-Pro-purple)]([https://github.com/kiro-workshop](https://github.com/marco-balderas/kiro-quick-intro))
 
 **TaskFlow Pro** es una aplicación web ejecutiva de gestión de tareas que contiene **100+ problemas intencionados** para demostrar las capacidades de análisis e integración de MCP servers en Kiro.
 

@@ -28,4 +28,5 @@ volumes:
 
 networks:
   kiro-workshop:
+    name: kiro-workshop_kiro-workshop
     driver: bridge

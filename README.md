@@ -142,6 +142,9 @@ cd src && python -m http.server 8000
 Abrir una nueva terminal y ejecutar:
 
 ```bash
+#Dar permisos de ejecucion
+chmod +x scripts/*.sh
+
 # Setup completo con captura interactiva de token
 ./scripts/setup-sonarqube.sh
 

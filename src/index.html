@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- PROBLEMA 1: Falta charset meta tag -->
+    <!-- PROBLEMA 2: Falta viewport meta tag para responsive -->
+    <!-- PROBLEMA 3: Falta meta description para SEO -->
+    
+    <title>TaskFlow Pro - Executive Task Manager</title>
+    
+    <!-- PROBLEMA 4: CSS bloqueante sin async/defer -->
+    <link rel="stylesheet" href="styles.css">
+    
+    <!-- PROBLEMA 5: Google Fonts bloqueante -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- PROBLEMA 6: Script bloqueante en head -->
+    <script src="app.js"></script>
+    
+    <!-- PROBLEMA 7: Inline styles críticos (debería estar en CSS externo) -->
+    <style>
+        /* PROBLEMA 8: Selectores ineficientes y profundamente anidados */
+        body div.container div.header div.title h1 span {
+            font-weight: 700;
+        }
+        
+        /* PROBLEMA 9: Animaciones pesadas sin will-change */
+        .task-card {
+            animation: slideIn 0.5s ease-out;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        
+        @keyframes slideIn {
+            from { transform: translateX(-100px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        
+        /* PROBLEMA 10: Colores con bajo contraste */
+        .stats-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #b8b8ff; /* Contraste insuficiente */
+        }
+        
+        /* PROBLEMA 11: Uso excesivo de !important */
+        .priority-high {
+            color: #ff6b6b !important;
+            font-weight: bold !important;
+            background: #ffe0e0 !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- PROBLEMA 12: Falta landmark <main> para accesibilidad -->
+    <div class="app-container">
+        <!-- PROBLEMA 13: Header sin <header> semántico -->
+        <div class="header">
+            <div class="logo-section">
+                <!-- PROBLEMA 14: Imagen sin alt text -->
+                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Ccircle cx='20' cy='20' r='18' fill='%23667eea'/%3E%3C/svg%3E" class="logo">
+                <div class="title-group">
+                    <!-- PROBLEMA 15: Heading sin estructura apropiada (h1 dentro de div) -->
+                    <h1>TaskFlow <span class="pro-badge">Pro</span></h1>
+                    <p class="subtitle">Executive Task Management</p>
+                </div>
+            </div>
+            
+            <!-- PROBLEMA 16: Stats con colores de bajo contraste -->
+            <div class="stats-container">
+                <div class="stats-card">
+                    <span class="stats-number" id="totalTasks">0</span>
+                    <span class="stats-label">Total Tasks</span>
+                </div>
+                <div class="stats-card">
+                    <span class="stats-number" id="completedTasks">0</span>
+                    <span class="stats-label">Completed</span>
+                </div>
+                <div class="stats-card">
+                    <span class="stats-number" id="pendingTasks">0</span>
+                    <span class="stats-label">Pending</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- PROBLEMA 17: Form sin <form> tag apropiado -->
+        <!-- PROBLEMA 18: Input sin <label> asociado - ACCESIBILIDAD CRÍTICA -->
+        <div class="input-section">
+            <div class="input-wrapper">
+                <input 
+                    type="text" 
+                    id="taskInput" 
+                    class="task-input"
+                    placeholder="What needs to be done?"
+                    <!-- PROBLEMA 19: Sin aria-label para screen readers -->
+                    <!-- PROBLEMA 20: Sin autocomplete attribute -->
+                >
+                <select id="prioritySelect" class="priority-select">
+                    <!-- PROBLEMA 21: Select sin label asociado -->
+                    <option value="low">Low Priority</option>
+                    <option value="medium" selected>Medium Priority</option>
+                    <option value="high">High Priority</option>
+                </select>
+            </div>
+            <!-- PROBLEMA 22: Botón sin type="button" explícito -->
+            <!-- PROBLEMA 23: Onclick inline en lugar de addEventListener -->
+            <button onclick="addTask()" class="btn-primary">
+                <span class="btn-icon">+</span>
+                Add Task
+            </button>
+        </div>
+        
+        <!-- PROBLEMA 24: Tabs sin role="tablist" para accesibilidad -->
+        <div class="filter-tabs">
+            <button class="tab active" onclick="filterTasks('all')">All Tasks</button>
+            <button class="tab" onclick="filterTasks('active')">Active</button>
+            <button class="tab" onclick="filterTasks('completed')">Completed</button>
+        </div>
+        
+        <!-- PROBLEMA 25: Lista sin role o aria-label apropiado -->
+        <div id="taskList" class="task-list"></div>
+        
+        <!-- PROBLEMA 26: Empty state sin mensaje apropiado -->
+        <div id="emptyState" class="empty-state" style="display: none;">
+            <div class="empty-icon"></div>
+            <h3>No tasks yet</h3>
+            <p>Add your first task to get started</p>
+        </div>
+    </div>
+    
+    <!-- PROBLEMA 27: Footer sin <footer> semántico -->
+    <div class="footer">
+        <p>© 2024 TaskFlow Pro. All rights reserved.</p>
+    </div>
+    
+    <!-- PROBLEMA 28: Script inline en lugar de archivo externo -->
+    <script>
+        // PROBLEMA 29: Variables globales
+        var tasks = [];
+        var taskCounter = 0;
+        var currentFilter = 'all';
+        
+        // PROBLEMA 30: Función sin validación de entrada
+        function addTask() {
+            var input = document.getElementById("taskInput");
+            var prioritySelect = document.getElementById("prioritySelect");
+            var taskText = input.value;
+            var priority = prioritySelect.value;
+            
+            // PROBLEMA 31: Comparación con == en lugar de ===
+            if (taskText == "") {
+                // PROBLEMA 32: alert() es mala UX
+                alert("Please enter a task!");
+                return;
+            }
+            
+            // PROBLEMA 33: Sin sanitización de entrada (XSS risk)
+            var task = {
+                id: taskCounter++,
+                text: taskText,
+                priority: priority,
+                completed: false,
+                createdAt: new Date()
+            };
+            
+            tasks.push(task);
+            input.value = "";
+            
+            // PROBLEMA 34: Sin guardar en localStorage
+            renderTasks();
+            updateStats();
+        }
+        
+        // PROBLEMA 35: Función con lógica ineficiente (O(n))
+        function toggleTask(id) {
+            for (var i = 0; i < tasks.length; i++) {
+                if (tasks[i].id == id) {
+                    tasks[i].completed = !tasks[i].completed;
+                    break;
+                }
+            }
+            renderTasks();
+            updateStats();
+        }
+        
+        // PROBLEMA 36: Función con lógica ineficiente (O(n))
+        function deleteTask(id) {
+            var newTasks = [];
+            for (var i = 0; i < tasks.length; i++) {
+                if (tasks[i].id != id) {
+                    newTasks.push(tasks[i]);
+                }
+            }
+            tasks = newTasks;
+            renderTasks();
+            updateStats();
+        }
+        
+        // PROBLEMA 37: Función sin usar filtros apropiadamente
+        function filterTasks(filter) {
+            currentFilter = filter;
+            
+            // PROBLEMA 38: Manipulación DOM ineficiente
+            var tabs = document.querySelectorAll('.tab');
+            for (var i = 0; i < tabs.length; i++) {
+                tabs[i].classList.remove('active');
+            }
+            event.target.classList.add('active');
+            
+            renderTasks();
+        }
+        
+        // PROBLEMA 39: Función que re-renderiza todo en lugar de actualizar solo lo necesario
+        function renderTasks() {
+            var taskList = document.getElementById("taskList");
+            var emptyState = document.getElementById("emptyState");
+            
+            // PROBLEMA 40: innerHTML con contenido no sanitizado
+            taskList.innerHTML = "";
+            
+            var filteredTasks = tasks.filter(function(task) {
+                if (currentFilter == 'active') return !task.completed;
+                if (currentFilter == 'completed') return task.completed;
+                return true;
+            });
+            
+            if (filteredTasks.length == 0) {
+                emptyState.style.display = 'block';
+                taskList.style.display = 'none';
+            } else {
+                emptyState.style.display = 'none';
+                taskList.style.display = 'block';
+                
+                for (var i = 0; i < filteredTasks.length; i++) {
+                    var task = filteredTasks[i];
+                    var taskCard = document.createElement("div");
+                    taskCard.className = "task-card" + 
+                        (task.completed ? " completed" : "") +
+                        " priority-" + task.priority;
+                    
+                    // PROBLEMA 41: innerHTML con onclick inline (XSS + mala práctica)
+                    taskCard.innerHTML = 
+                        '<div class="task-content">' +
+                        '<div class="task-checkbox" onclick="toggleTask(' + task.id + ')">' +
+                        (task.completed ? '✓' : '') +
+                        '</div>' +
+                        '<div class="task-details">' +
+                        '<div class="task-text">' + task.text + '</div>' +
+                        '<div class="task-meta">' +
+                        '<span class="task-priority">' + task.priority + '</span>' +
+                        '<span class="task-date">' + formatDate(task.createdAt) + '</span>' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>' +
+                        '<div class="task-actions">' +
+                        '<button class="btn-icon" onclick="toggleTask(' + task.id + ')" title="Toggle">' +
+                        (task.completed ? '↶' : '✓') +
+                        '</button>' +
+                        '<button class="btn-icon btn-delete" onclick="deleteTask(' + task.id + ')" title="Delete">🗑</button>' +
+                        '</div>';
+                    
+                    taskList.appendChild(taskCard);
+                }
+            }
+        }
+        
+        // PROBLEMA 42: Función con lógica de fecha simplificada
+        function formatDate(date) {
+            var now = new Date();
+            var diff = now - date;
+            var minutes = Math.floor(diff / 60000);
+            
+            if (minutes < 1) return 'Just now';
+            if (minutes < 60) return minutes + 'm ago';
+            if (minutes < 1440) return Math.floor(minutes / 60) + 'h ago';
+            return Math.floor(minutes / 1440) + 'd ago';
+        }
+        
+        // PROBLEMA 43: Función con cálculos repetitivos
+        function updateStats() {
+            var total = tasks.length;
+            var completed = 0;
+            
+            for (var i = 0; i < tasks.length; i++) {
+                if (tasks[i].completed) {
+                    completed++;
+                }
+            }
+            
+            var pending = total - completed;
+            
+            document.getElementById('totalTasks').textContent = total;
+            document.getElementById('completedTasks').textContent = completed;
+            document.getElementById('pendingTasks').textContent = pending;
+        }
+        
+        // PROBLEMA 44: Sin inicialización al cargar la página
+        // PROBLEMA 45: Sin event listener para Enter key en input
+        
+        // PROBLEMA 46: Código duplicado de console.log
+        console.log("TaskFlow Pro loaded");
+        console.log("TaskFlow Pro loaded");
+        
+        // Inicialización básica
+        updateStats();
+    </script>
+    
+    <!-- PROBLEMA 47: Sin skip links para accesibilidad -->
+</body>
+</html>
